@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>System Dashboard</h2>
+    <p>Welcome to the Police Facial Recognition System. This advanced AI system helps law enforcement agencies identify missing persons and match unidentified bodies.</p>
+    
+    <div class="stats" id="stats">
+        <div class="stat-card">
+            <div class="stat-number" id="missing-count">-</div>
+            <div>Missing Persons</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="bodies-count">-</div>
+            <div>Unidentified Bodies</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="matches-count">-</div>
+            <div>Potential Matches</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Quick Actions</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        <a href="{{ url_for('add_missing_person') }}" class="btn">➕ Add Missing Person</a>
+        <a href="{{ url_for('add_unidentified_body') }}" class="btn">➕ Add Unidentified Body</a>
+        <a href="{{ url_for('search') }}" class="btn btn-success">🔍 Search by Photo</a>
+        <a href="{{ url_for('find_matches') }}" class="btn btn-danger">🎯 Find Matches</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>System Features</h3>
+    <ul style="line-height: 2;">
+        <li>🔍 <strong>Advanced Face Detection:</strong> Automatically detect and extract facial features from photos</li>
+        <li>🎯 <strong>Intelligent Matching:</strong> Compare faces using advanced AI algorithms</li>
+        <li>📊 <strong>Confidence Scoring:</strong> Get reliability scores for each potential match</li>
+        <li>📁 <strong>Case Management:</strong> Organize and track missing person and unidentified body cases</li>
+        <li>🔒 <strong>Secure Database:</strong> Encrypted storage of sensitive investigation data</li>
+        <li>📱 <strong>Web Interface:</strong> Easy-to-use interface accessible from any device</li>
+    </ul>
+</div>
+
+<script>
+// Load statistics
+fetch('/api/stats')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('missing-count').textContent = data.missing_persons;
+        document.getElementById('bodies-count').textContent = data.unidentified_bodies;
+        document.getElementById('matches-count').textContent = data.potential_matches;
+    })
+    .catch(error => console.error('Error loading stats:', error));
+</script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Search by Photo - Police Facial Recognition System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🔍 Search by Photo</h2>
+    <p>Upload a photo to search for matches in the missing persons and unidentified bodies database.</p>
+    
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="photo">Upload Photo *</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+            <small>Supported formats: JPG, PNG, GIF. Max size: 16MB</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="threshold">Confidence Threshold</label>
+            <select id="threshold" name="threshold">
+                <option value="0.5">50% - Low (More results, less accurate)</option>
+                <option value="0.6" selected>60% - Medium (Balanced)</option>
+                <option value="0.7">70% - High (Fewer results, more accurate)</option>
+                <option value="0.8">80% - Very High (Most accurate)</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn">🔍 Search Database</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>🎯 Search Guidelines</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div>
+            <h4>Best Practices:</h4>
+            <ul style="line-height: 1.8;">
+                <li>Use clear, well-lit photos</li>
+                <li>Front-facing angles work best</li>
+                <li>Avoid heavily filtered images</li>
+                <li>Higher resolution improves accuracy</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Confidence Levels:</h4>
+            <ul style="line-height: 1.8;">
+                <li><strong>80%+:</strong> Very likely match</li>
+                <li><strong>70-79%:</strong> Probable match</li>
+                <li><strong>60-69%:</strong> Possible match</li>
+                <li><strong>50-59%:</strong> Weak match</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

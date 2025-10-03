@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Add Missing Person - Police Facial Recognition System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Add Missing Person</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="age">Age *</label>
+            <input type="number" id="age" name="age" min="1" max="120" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="gender">Gender *</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="case_number">Case Number *</label>
+            <input type="text" id="case_number" name="case_number" placeholder="MP-2024-001" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="last_seen_date">Last Seen Date *</label>
+            <input type="date" id="last_seen_date" name="last_seen_date" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="last_seen_location">Last Seen Location *</label>
+            <input type="text" id="last_seen_location" name="last_seen_location" placeholder="City, State" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Physical Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Height, weight, distinguishing features, clothing last seen wearing..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="photo">Photo *</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+            <small>Supported formats: JPG, PNG, GIF. Max size: 16MB</small>
+        </div>
+        
+        <button type="submit" class="btn">Add Missing Person</button>
+        <a href="{{ url_for('index') }}" class="btn" style="background: #666; margin-left: 1rem;">Cancel</a>
+    </form>
+</div>
+
+<div class="card">
+    <h3>📋 Guidelines for Photo Upload</h3>
+    <ul style="line-height: 1.8;">
+        <li>Use clear, high-quality photos showing the person's face clearly</li>
+        <li>Front-facing photos work best for facial recognition</li>
+        <li>Avoid photos with heavy shadows or poor lighting</li>
+        <li>Multiple people in photo may affect accuracy</li>
+        <li>Recent photos provide better matching results</li>
+    </ul>
+</div>
+{% endblock %}

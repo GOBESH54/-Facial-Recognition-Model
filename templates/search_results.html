@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - Police Facial Recognition System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🔍 Search Results</h2>
+    
+    {% if matches %}
+        <p><strong>Found {{ matches|length }} potential matches:</strong></p>
+        
+        {% for match in matches %}
+        <div class="match-item {% if match.confidence >= 0.8 %}confidence-high{% elif match.confidence >= 0.7 %}confidence-medium{% else %}confidence-low{% endif %}">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; align-items: center;">
+                <div>
+                    <h4>{{ match.type|title|replace('_', ' ') }}</h4>
+                    {% if match.name %}
+                        <p><strong>Name:</strong> {{ match.name }}</p>
+                    {% endif %}
+                    <p><strong>Case:</strong> {{ match.case_number }}</p>
+                    {% if match.found_location %}
+                        <p><strong>Location:</strong> {{ match.found_location }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p><strong>Confidence:</strong> 
+                        <span style="font-size: 1.2rem; font-weight: bold; 
+                              color: {% if match.confidence >= 0.8 %}#4caf50{% elif match.confidence >= 0.7 %}#ff9800{% else %}#f44336{% endif %};">
+                            {{ "%.0f"|format(match.confidence * 100) }}%
+                        </span>
+                    </p>
+                    <p><strong>Match Quality:</strong>
+                        {% if match.confidence >= 0.8 %}
+                            <span style="color: #4caf50;">Very Strong Match</span>
+                        {% elif match.confidence >= 0.7 %}
+                            <span style="color: #ff9800;">Strong Match</span>
+                        {% elif match.confidence >= 0.6 %}
+                            <span style="color: #ff9800;">Moderate Match</span>
+                        {% else %}
+                            <span style="color: #f44336;">Weak Match</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    {% else %}
+        <div style="text-align: center; padding: 2rem; color: #666;">
+            <p>No matches found for the uploaded photo.</p>
+            <p>Try adjusting the confidence threshold or uploading a different photo.</p>
+        </div>
+    {% endif %}
+    
+    <div style="margin-top: 2rem; text-align: center;">
+        <a href="{{ url_for('search') }}" class="btn">Search Again</a>
+        <a href="{{ url_for('index') }}" class="btn" style="background: #666; margin-left: 1rem;">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
